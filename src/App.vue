@@ -11,14 +11,15 @@ import { get } from 'lodash-es'
 const fakeKeys = `West of Dead, 4JGKG-BGFNL-GEWDV 4BBS9-QMPFN-I5JM6 1AB2C-D3FGH-456I7-JK8LM-P2222
 Tooth and Tail:，4WXM7-3PJ82-5YD8E C3DTC-8FMBL-FQV0Q
 SYSTEM SHOCK: ENHANCED EDITION 4QJXV-ACN8F-27BAJ 4G7FZ-QX6GJ-2W2KW
-Dear Esther: Landmark Edition：4EEQB-7GM99-P2DA9 3ZN0R-DA2MG-VGR2Y`
+Dear Esther: Landmark Edition：4EEQB-7GM99-P2DA9 3ZN0R-DA2MG-VGR2Y
+Call of duty:1AB2C-D3FGH-456I7,456I7-JK8LM-P5555`
 
 function extractGameAndCdk(line: string) {
   const cdkRegex = /((?!\D{12}|[^A-z]{12})([A-z0-9]{4,5}-?[A-z0-9]{4,5}-?[A-z0-9]{4,5}(-?[A-z0-9]{4,5}(-?[A-z0-9]{4,5})?)?))/g
   const cdkArr = line.match(cdkRegex) || []
   let name = line.replaceAll(cdkRegex, '').trim()
   // 名字末尾如果是分隔符则去除
-  if (/[:：,，.。]$/.test(name)) {
+  while (/[:：,，.。]$/.test(name)) {
     name = name.slice(0, -1)
   }
   return cdkArr.map(cdk => ({ name, cdk }))
