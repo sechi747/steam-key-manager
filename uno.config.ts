@@ -76,12 +76,6 @@ export default defineConfig({
         'a:hover': {
           'text-decoration-color': 'rgba(38, 166, 154,1);',
         },
-        'pre': {
-          background: '#23272d !important',
-        },
-        'blockquote': {
-          'border-left': '0.25em solid rgb(38, 166, 154)',
-        },
       },
     }),
     presetWebFonts({

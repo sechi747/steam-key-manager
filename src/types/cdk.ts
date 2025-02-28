@@ -9,7 +9,7 @@ export interface CdkEntity {
   // isFromPackage: boolean // 是否来自慈善包
   // packageId: string | null // 关联的慈善包 ID
   // tag: string[]
-  deleteFlag: boolean
+  // deleteFlag: boolean
   // statusHistory: StatusHistoryItem[]
   createAt: number
   updateAt: number
