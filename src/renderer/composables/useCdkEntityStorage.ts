@@ -1,4 +1,4 @@
-import type { CdkEntity } from '@/types/cdk'
+import type { CdkEntity } from '@renderer/types/cdk'
 import { useLocalStorage } from '@vueuse/core'
 
 export function useCdkEntityStorage() {

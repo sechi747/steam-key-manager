@@ -1,4 +1,4 @@
-import type { CdkEntity } from '@/types/cdk'
+import type { CdkEntity } from '@renderer/types/cdk'
 
 export function extractGameAndCdk(line: string) {
   const cdkRegex = /((?!\D{12}|[^A-z]{12})([A-z0-9]{4,5}-?[A-z0-9]{4,5}-?[A-z0-9]{4,5}(-?[A-z0-9]{4,5}(-?[A-z0-9]{4,5})?)?))/g

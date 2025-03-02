@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useCdkEntityStorage } from '@/composables/useCdkEntityStorage'
-import { processInputLines } from '@/utils/extractUtils'
+import { useCdkEntityStorage } from '@renderer/composables/useCdkEntityStorage'
+import { processInputLines } from '@renderer/utils/extractUtils'
 
 const visible = ref(false)
 const inputLines = ref('')

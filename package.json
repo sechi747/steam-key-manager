@@ -3,20 +3,31 @@
   "type": "module",
   "version": "0.0.0",
   "private": true,
+  "main": "./out/main/index.js",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc -b && vite build",
-    "preview": "vite preview",
-    "lint": "eslint --ext .ts,.vue src --fix"
+    "dev": "electron-vite dev",
+    "preview": "electron-vite preview",
+    "lint": "eslint --ext .ts,.vue src/renderer --fix",
+    "typecheck:node": "tsc --noEmit -p tsconfig.node.json --composite false",
+    "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
+    "typecheck": "npm run typecheck:node && npm run typecheck:web",
+    "postinstall": "electron-builder install-app-deps",
+    "build": "npm run typecheck && electron-vite build",
+    "build:unpack": "npm run build && electron-builder --dir",
+    "build:win": "npm run build && electron-builder --win",
+    "build:mac": "npm run build && electron-builder --mac",
+    "build:linux": "npm run build && electron-builder --linux"
   },
   "dependencies": {
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/utils": "^4.0.0",
     "@iconify-json/carbon": "^1.2.8",
     "@iconify-json/twemoji": "^1.2.2",
     "@vueuse/core": "^12.7.0",
     "lodash-es": "^4.17.21",
     "tdesign-vue-next": "^1.11.0",
     "vue": "^3.5.13",
-    "vue-router": "4"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.3.0",
@@ -26,6 +37,9 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
     "@vue/tsconfig": "^0.7.0",
+    "electron": "^34.3.0",
+    "electron-builder": "^25.1.8",
+    "electron-vite": "^3.0.0",
     "eslint": "^9.20.1",
     "typescript": "~5.7.2",
     "unocss": "66.1.0-beta.2",
@@ -33,5 +47,11 @@
     "unplugin-vue-components": "^28.4.1",
     "vite": "^6.2.0",
     "vue-tsc": "^2.2.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "electron",
+      "esbuild"
+    ]
   }
 }

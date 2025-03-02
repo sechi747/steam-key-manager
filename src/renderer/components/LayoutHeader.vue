@@ -13,7 +13,7 @@ function toGithubPage() {
   >
     <img
       left-8 top-6 h-6
-      src="/vite.svg"
+      src="../assets/vue.svg"
       alt="logo"
     >
     <div grid auto-flow-col gap-5>

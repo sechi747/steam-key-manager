@@ -1,6 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
-import Home from '@/modules/Home/index.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import Home from '@renderer/modules/Home/index.vue'
+import { createRouter, createWebHashHistory} from 'vue-router'
 
 export const routes: RouteRecordRaw[] = [
   {
@@ -10,6 +10,6 @@ export const routes: RouteRecordRaw[] = [
   },
 ]
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory('/'),
   routes,
 })

@@ -10,4 +10,4 @@
 - [ ] excel 导入导出
 - [ ] 价格相关的功能
 - [ ] 自动匹配 steam 游戏链接
-- [ ] electron 打包
+- [x] 集成 electron

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormProps } from 'tdesign-vue-next'
-import { useCdkEntityStorage } from '@/composables/useCdkEntityStorage'
+import { useCdkEntityStorage } from '@renderer/composables/useCdkEntityStorage'
 import { cloneDeep } from 'lodash-es'
 
 const { findCdk, editCdk } = useCdkEntityStorage()

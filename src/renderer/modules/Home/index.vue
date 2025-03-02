@@ -1,7 +1,7 @@
 <script setup lang="tsx">
-import type { CdkEntity } from '@/types/cdk'
+import type { CdkEntity } from '@renderer/types/cdk'
 import type { PrimaryTableCol } from 'tdesign-vue-next'
-import { useCdkEntityStorage } from '@/composables/useCdkEntityStorage'
+import { useCdkEntityStorage } from '@renderer/composables/useCdkEntityStorage'
 import { useDateFormat } from '@vueuse/core'
 import BatchAddCdkDialog from './components/BatchAddCdkDialog.vue'
 import EditCdkDialog from './components/EditCdkDialog.vue'

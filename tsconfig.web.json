@@ -5,7 +5,6 @@
     "target": "ESNext",
     "jsx": "preserve",
     "jsxImportSource": "vue",
-
     "lib": [
       "esnext",
       "dom",
@@ -17,20 +16,32 @@
     "module": "ESNext",
     "moduleResolution": "Node",
     "paths": {
-      "@/*": ["src/*"]
+      "@renderer/*": ["src/renderer/*"]
     },
+    "types": [
+      "vite/client",
+      "./src/preload"
+    ],
     "resolveJsonModule": true,
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": false,
+    "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
-
     "skipLibCheck": true
   },
-  "include": ["src/**/*.ts", "./*.d.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "node_modules/tdesign-vue-next/global.d.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "node_modules/tdesign-vue-next/global.d.ts"
+  ]
 }
