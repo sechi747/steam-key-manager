@@ -3,7 +3,6 @@ import {
   presetAttributify,
   presetIcons,
   presetTypography,
-  presetWebFonts,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
@@ -43,7 +42,7 @@ export default defineConfig({
   ],
   theme: {
     fontFamily: {
-      mono: 'dm,ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
+      mono: '"LXGW WenKai Screen", sans-serif',
     },
     colors: {
       bg: {
@@ -76,14 +75,6 @@ export default defineConfig({
         'a:hover': {
           'text-decoration-color': 'rgba(38, 166, 154,1);',
         },
-      },
-    }),
-    presetWebFonts({
-      provider: 'bunny',
-      fonts: {
-        sans: 'DM Sans',
-        serif: 'DM Serif Display',
-        mono: 'DM Mono',
       },
     }),
   ],
