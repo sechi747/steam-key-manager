@@ -1,8 +1,8 @@
 <script setup lang="tsx">
-import type { CdkEntity } from '@renderer/types/cdk'
+import type { CdkEntity, CdkStatus } from '@renderer/types/cdk'
 import type { PrimaryTableCol } from 'tdesign-vue-next'
 import { useCdkEntityStorage } from '@renderer/composables/useCdkEntityStorage'
-import { useDateFormat } from '@vueuse/core'
+import { useColorMode, useDateFormat } from '@vueuse/core'
 import BatchAddCdkDialog from './components/BatchAddCdkDialog.vue'
 import EditCdkDialog from './components/EditCdkDialog.vue'
 
@@ -14,16 +14,35 @@ import EditCdkDialog from './components/EditCdkDialog.vue'
 
 const { cdkList, deleteCdk, batchDeleteCdk } = useCdkEntityStorage()
 
+const color = useColorMode({ disableTransition: false })
+
 const statusMap = {
   isUsed: { text: '已使用', theme: 'danger' },
   isUnused: { text: '未使用', theme: 'success' },
-  isPending: { text: '挂起', theme: ' default' },
+  isPending: { text: '挂起', theme: 'default' },
 }
 
 const selectedRowKeys = ref<string[]>([])
 
 const batchAddRef = ref<InstanceType<typeof BatchAddCdkDialog>>()
 const editRef = ref<InstanceType<typeof EditCdkDialog>>()
+
+function popupRenderer(row: CdkEntity) {
+  const changeStatus = (status: CdkStatus) => {
+    row.status = status
+  }
+  return (
+    <div class="fccc gap-2 p-1">
+      {Object.entries(statusMap).map(([key, { text, theme }]) => {
+        return (
+          <t-tag class="cursor-pointer" theme={theme} variant={color.value} onClick={() => changeStatus(key as CdkStatus)}>
+            {text}
+          </t-tag>
+        )
+      })}
+    </div>
+  )
+}
 
 const columns: PrimaryTableCol<CdkEntity>[] = [
   {
@@ -40,9 +59,11 @@ const columns: PrimaryTableCol<CdkEntity>[] = [
     width: 110,
     cell: (_, { row }) => {
       return (
-        <t-tag theme={statusMap[row.status].theme}>
-          {statusMap[row.status].text}
-        </t-tag>
+        <t-popup content={() => popupRenderer(row)} placement="right" trigger="click" show-arrow destroy-on-close>
+          <t-tag class="cursor-pointer" theme={statusMap[row.status].theme} variant={color.value}>
+            {statusMap[row.status].text}
+          </t-tag>
+        </t-popup>
       )
     },
   },
@@ -61,12 +82,12 @@ const columns: PrimaryTableCol<CdkEntity>[] = [
     cell: (_, { row }) => {
       return (
         <div class="fcc gap-2">
-          <t-button theme="primary" size="small" onClick={() => handleEdit(row.id)}>
+          <t-link theme="primary" hover="color" onClick={() => handleEdit(row.id)}>
             编辑
-          </t-button>
-          <t-button theme="danger" size="small" onClick={() => handleDelete(row.id)}>
+          </t-link>
+          <t-link theme="danger" hover="color" onClick={() => handleDelete(row.id)}>
             删除
-          </t-button>
+          </t-link>
         </div>
       )
     },
@@ -94,10 +115,10 @@ function handleFormat() {
   <div base>
     <div mb-4 flex items-center gap-4>
       <t-button @click="handleFormat">
-        batch add
+        批量新增
       </t-button>
-      <t-button theme="danger" @click="handleBatchDelete">
-        batch delete
+      <t-button theme="danger" :disabled="selectedRowKeys.length < 1" @click="handleBatchDelete">
+        批量删除
       </t-button>
     </div>
 
@@ -106,7 +127,6 @@ function handleFormat() {
       row-key="id"
       :data="cdkList"
       :border="false"
-      hover
       cell-empty-content="-"
       lazy-load
       :columns="columns as unknown as PrimaryTableCol[]"
