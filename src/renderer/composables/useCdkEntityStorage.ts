@@ -23,7 +23,10 @@ export function useCdkEntityStorage() {
   const editCdk = (updatedCdk: CdkEntity) => {
     const index = cdkList.value.findIndex(item => item.id === updatedCdk.id)
     if (index !== -1) {
-      cdkList.value[index] = updatedCdk
+      cdkList.value[index] = {
+        ...cdkList.value[index],
+        ...updatedCdk,
+      }
     }
   }
 

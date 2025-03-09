@@ -69,10 +69,10 @@ const columns: PrimaryTableCol<CdkEntity>[] = [
   },
   {
     colKey: 'createAt',
-    title: '添加时间',
+    title: '更新时间',
     align: 'center',
     width: 220,
-    cell: (_, { row }) => useDateFormat(row.createAt, 'YYYY-MM-DD HH:mm:ss').value,
+    cell: (_, { row }) => useDateFormat(row.updateAt, 'YYYY-MM-DD HH:mm:ss').value,
   },
   {
     colKey: 'operation',
