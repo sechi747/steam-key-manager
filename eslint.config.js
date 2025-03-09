@@ -5,5 +5,6 @@ export default antfu({
   rules: {
     'no-console': 'warn',
     'regexp/no-obscure-range': 'off',
+    'n/prefer-global/process': 'off',
   },
 })
