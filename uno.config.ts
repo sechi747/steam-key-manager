@@ -15,8 +15,8 @@ export default defineConfig({
 
     ['trans', 'transition-all-250 ease-linear'],
     ['text', 'text-text-default dark:text-text-dark'],
-    ['bg', 'trans bg-bg-default dark:bg-bg-dark'],
-    ['base', 'trans text'],
+    ['bg', 'bg-bg-default dark:bg-bg-dark'],
+    ['base', 'text'],
 
     ['pr', 'relative'],
     ['pa', 'absolute'],
@@ -46,12 +46,12 @@ export default defineConfig({
     },
     colors: {
       bg: {
-        default: '#fefefe',
-        dark: '#1c1f24',
+        default: '#ffffff',
+        dark: '#242424',
       },
       text: {
-        default: '#3b3b3b',
-        dark: '#C8CCD0',
+        default: 'rgba(0, 0, 0, 0.9);',
+        dark: 'rgba(255, 255, 255, 0.9);',
       },
       primary: '#26a69a',
     },

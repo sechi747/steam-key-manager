@@ -3,6 +3,16 @@
   --td-font-family-medium: "LXGW WenKai Screen", sans-serif;
 }
 
+::view-transition-new(root),
+::view-transition-old(root) {
+/* 关闭默认动画，否则影响自定义的主题切换动画的执行 */
+   animation: none;
+}
+
+.dark::view-transition-old(root) {
+  z-index: 100;
+}
+
 *,
 *::before,
 *::after {
