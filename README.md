@@ -10,4 +10,5 @@
 - [ ] excel 导入导出
 - [ ] 价格相关的功能
 - [ ] 自动匹配 steam 游戏链接
+- [ ] 使用 sqlite 代替 localStorage
 - [x] 集成 electron
