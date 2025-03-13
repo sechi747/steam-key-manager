@@ -1,18 +1,14 @@
 <script setup lang="ts">
-import { useColorMode } from '@vueuse/core'
+import { useThemeMode } from '@renderer/composables/useThemeMode'
 
-const color = useColorMode({ disableTransition: false })
+const { themeMode, isDarkMode, toggleThemeMode } = useThemeMode()
 
 const buttonTitle = ref('')
 const switchRef = ref<HTMLElement>()
-const isDark = computed(() => color.value === 'dark')
 
 async function toggleColor() {
   await handleViewTransition()
-  isDark.value
-    ? document.documentElement.removeAttribute('theme-mode')
-    : document.documentElement.setAttribute('theme-mode', 'dark')
-  color.value = isDark.value ? 'light' : 'dark'
+  toggleThemeMode()
 }
 
 function handleViewTransition() {
@@ -46,12 +42,12 @@ function handleViewTransition() {
       ]
       document.documentElement.animate(
         {
-          clipPath: isDark.value ? [...clipPath].reverse() : clipPath,
+          clipPath: isDarkMode.value ? [...clipPath].reverse() : clipPath,
         },
         {
           duration: 400,
           easing: 'ease-in',
-          pseudoElement: isDark.value
+          pseudoElement: isDarkMode.value
             ? '::view-transition-old(root)'
             : '::view-transition-new(root)',
         },
@@ -61,8 +57,8 @@ function handleViewTransition() {
 }
 
 watch(
-  () => color.value,
-  () => nextTick(() => buttonTitle.value = color.value === 'dark' ? '切换至日间模式' : '切换至夜间模式'),
+  () => themeMode.value,
+  () => nextTick(() => buttonTitle.value = themeMode.value === 'dark' ? '切换至日间模式' : '切换至夜间模式'),
   { immediate: true },
 )
 </script>

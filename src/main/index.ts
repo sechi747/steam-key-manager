@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
-import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import { app, BrowserWindow, ipcMain, nativeTheme, shell } from 'electron'
 
 function createWindow(): void {
   // Create the browser window.
@@ -9,11 +9,14 @@ function createWindow(): void {
     height: 670,
     show: false,
     autoHideMenuBar: true,
+    backgroundColor: nativeTheme.shouldUseDarkColors ? '#242424' : '#ffffff',
     webPreferences: {
       preload: join(__dirname, '../preload/index.mjs'),
       sandbox: false,
     },
   })
+
+  nativeTheme.themeSource = 'system'
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
@@ -33,6 +36,14 @@ function createWindow(): void {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
 }
+
+// 监听系统主题变化
+nativeTheme.on('updated', () => {
+  const allWindows = BrowserWindow.getAllWindows()
+  for (const window of allWindows) {
+    window.setBackgroundColor(nativeTheme.shouldUseDarkColors ? '#242424' : '#ffffff')
+  }
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

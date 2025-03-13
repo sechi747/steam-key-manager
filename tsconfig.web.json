@@ -18,11 +18,11 @@
     "paths": {
       "@renderer/*": ["src/renderer/*"]
     },
+    "resolveJsonModule": true,
     "types": [
       "vite/client",
       "./src/preload"
     ],
-    "resolveJsonModule": true,
     /* Linting */
     "strict": true,
     "noFallthroughCasesInSwitch": true,
