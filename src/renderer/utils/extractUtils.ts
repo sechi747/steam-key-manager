@@ -1,6 +1,16 @@
 import type { CdkEntity } from '@renderer/types/cdk'
 
 export function extractGameAndCdk(line: string) {
+  // 处理如下格式  游戏名：Silver Chains ,Key: 8T34G-5ZNBI-ZETVC
+  const regex = /游戏名：([^,]+),Key: ([A-z0-9-]+)/
+  const match = line.match(regex)
+
+  if (match) {
+    const name = match[1].trim()
+    const cdk = match[2].trim()
+    return [{ name, cdk }]
+  }
+
   const cdkRegex = /((?!\D{12}|[^A-z]{12})([A-z0-9]{4,5}-?[A-z0-9]{4,5}-?[A-z0-9]{4,5}(-?[A-z0-9]{4,5}(-?[A-z0-9]{4,5})?)?))/g
   const cdkArr = line.match(cdkRegex) || []
   let name = line.replaceAll(cdkRegex, '').trim()
