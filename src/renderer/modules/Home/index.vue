@@ -13,7 +13,6 @@ import EditCdkDialog from './components/EditCdkDialog.vue'
 // Call of duty:1AB2C-D3FGH-456I7,456I7-JK8LM-P5555`
 
 const { cdkList, deleteCdk, batchDeleteCdk } = useCdkEntityStorage()
-
 const color = useColorMode({ disableTransition: false })
 
 const statusMap = {
@@ -94,16 +93,16 @@ const columns: PrimaryTableCol<CdkEntity>[] = [
   },
 ]
 
-function handleDelete(id: string) {
-  deleteCdk(id)
+async function handleDelete(id: string) {
+  await deleteCdk(id)
 }
 
-function handleBatchDelete() {
-  batchDeleteCdk(selectedRowKeys.value)
+async function handleBatchDelete() {
+  await batchDeleteCdk(selectedRowKeys.value)
 }
 
-function handleEdit(id: string) {
-  editRef.value?.open(id)
+async function handleEdit(id: string) {
+  await editRef.value?.open(id)
 }
 
 function handleFormat() {

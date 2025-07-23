@@ -17,14 +17,17 @@ const formData: FormProps['data'] = ref({
   status: '',
 })
 
-function onConfirm() {
-  editCdk({ ...formData!.value, updateAt: Date.now() })
+async function onConfirm() {
+  await editCdk({ ...formData!.value, updateAt: Date.now() })
   close()
 }
 
-function open(id: string) {
-  formData!.value = cloneDeep(findCdk(id))
-  visible.value = true
+async function open(id: string) {
+  const cdk = await findCdk(id)
+  if (cdk) {
+    formData!.value = cloneDeep(cdk)
+    visible.value = true
+  }
 }
 
 function close() {

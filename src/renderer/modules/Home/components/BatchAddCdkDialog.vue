@@ -5,15 +5,15 @@ import { processInputLines } from '@renderer/utils/extractUtils'
 const visible = ref(false)
 const inputLines = ref('')
 
-function handleAddCdk() {
+async function handleAddCdk() {
   const lines = inputLines.value.split('\n')
   const cdkInstances = processInputLines(lines)
   const { batchAddCdk } = useCdkEntityStorage()
-  batchAddCdk(cdkInstances)
+  await batchAddCdk(cdkInstances)
 }
 
-function onConfirm() {
-  handleAddCdk()
+async function onConfirm() {
+  await handleAddCdk()
   close()
 }
 

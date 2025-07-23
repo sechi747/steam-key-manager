@@ -1,6 +1,7 @@
 import { join } from 'node:path'
 import { electronApp, is, optimizer } from '@electron-toolkit/utils'
 import { app, BrowserWindow, ipcMain, nativeTheme, shell } from 'electron'
+import { dbManager } from './database'
 
 function createWindow(): void {
   // Create the browser window.
@@ -59,8 +60,16 @@ app.whenReady().then(() => {
     optimizer.watchWindowShortcuts(window)
   })
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'))
+  // 注册数据库 IPC 处理器
+  ipcMain.handle('db:getAllCdks', () => dbManager.getAllCdks())
+  ipcMain.handle('db:addCdk', (_, cdk) => dbManager.addCdk(cdk))
+  ipcMain.handle('db:batchAddCdks', (_, cdks) => dbManager.batchAddCdks(cdks))
+  ipcMain.handle('db:updateCdk', (_, cdk) => dbManager.updateCdk(cdk))
+  ipcMain.handle('db:deleteCdk', (_, id) => dbManager.deleteCdk(id))
+  ipcMain.handle('db:batchDeleteCdks', (_, ids) => dbManager.batchDeleteCdks(ids))
+  ipcMain.handle('db:findCdk', (_, id) => dbManager.findCdk(id))
+  ipcMain.handle('db:searchCdks', (_, keyword) => dbManager.searchCdks(keyword))
+  ipcMain.handle('db:getCdksByStatus', (_, status) => dbManager.getCdksByStatus(status))
 
   createWindow()
 
@@ -79,6 +88,11 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit()
   }
+})
+
+// 应用退出时关闭数据库
+app.on('before-quit', () => {
+  dbManager.close()
 })
 
 // In this file you can include the rest of your app's specific main process
