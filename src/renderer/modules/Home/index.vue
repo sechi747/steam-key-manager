@@ -12,7 +12,7 @@ import EditCdkDialog from './components/EditCdkDialog.vue'
 // Dear Esther: Landmark Edition：4EEQB-7GM99-P2DA9 3ZN0R-DA2MG-VGR2Y
 // Call of duty:1AB2C-D3FGH-456I7,456I7-JK8LM-P5555`
 
-const { cdkList, deleteCdk, batchDeleteCdk } = useCdkEntityStorage()
+const { cdkList, deleteCdk, batchDeleteCdk, editCdk } = useCdkEntityStorage()
 const color = useColorMode({ disableTransition: false })
 
 const statusMap = {
@@ -27,8 +27,8 @@ const batchAddRef = ref<InstanceType<typeof BatchAddCdkDialog>>()
 const editRef = ref<InstanceType<typeof EditCdkDialog>>()
 
 function popupRenderer(row: CdkEntity) {
-  const changeStatus = (status: CdkStatus) => {
-    row.status = status
+  const changeStatus = async (status: CdkStatus) => {
+    await editCdk({ ...row, status, updateAt: Date.now() })
   }
   return (
     <div class="fccc gap-2 p-1">
@@ -78,18 +78,6 @@ const columns: PrimaryTableCol<CdkEntity>[] = [
     title: '操作',
     align: 'center',
     width: 150,
-    cell: (_, { row }) => {
-      return (
-        <div class="fcc gap-2">
-          <t-link theme="primary" hover="color" onClick={() => handleEdit(row.id)}>
-            编辑
-          </t-link>
-          <t-link theme="danger" hover="color" onClick={() => handleDelete(row.id)}>
-            删除
-          </t-link>
-        </div>
-      )
-    },
   },
 ]
 
@@ -116,9 +104,11 @@ function handleFormat() {
       <t-button @click="handleFormat">
         批量新增
       </t-button>
-      <t-button theme="danger" :disabled="selectedRowKeys.length < 1" @click="handleBatchDelete">
-        批量删除
-      </t-button>
+      <t-popconfirm theme="danger" content="确定要删除选中的 cdk 吗？" @confirm="handleBatchDelete">
+        <t-button theme="danger" :disabled="selectedRowKeys.length < 1">
+          批量删除
+        </t-button>
+      </t-popconfirm>
     </div>
 
     <t-table
@@ -129,7 +119,20 @@ function handleFormat() {
       cell-empty-content="-"
       lazy-load
       :columns="columns as unknown as PrimaryTableCol[]"
-    />
+    >
+      <template #operation="{ row }">
+        <div class="fcc gap-2">
+          <t-link theme="primary" hover="color" @click="handleEdit(row.id)">
+            编辑
+          </t-link>
+          <t-popconfirm theme="danger" content="确定要删除该 cdk 吗？" @confirm="handleDelete(row.id)">
+            <t-link theme="danger" hover="color">
+              删除
+            </t-link>
+          </t-popconfirm>
+        </div>
+      </template>
+    </t-table>
 
     <BatchAddCdkDialog ref="batchAddRef" />
     <EditCdkDialog ref="editRef" />

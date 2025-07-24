@@ -5,7 +5,6 @@ export const useCdkEntityStorage = createSharedComposable(() => {
   const cdkList = ref<CdkEntity[]>([])
 
   const loadCdks = async () => {
-    console.log('loadCdks')
     try {
       cdkList.value = await window.electronAPI.db.getAllCdks()
     }
